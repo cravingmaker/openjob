@@ -8,10 +8,7 @@ import { getAll, getById, insert, remove, update } from './service.js';
 import { companySchema } from './validator.js';
 
 async function listCompanies(_req, res) {
-	res.json({
-		data: { companies: await getAll() },
-		status: 'success',
-	});
+	sendCached(res, await getAll(), (companies) => ({ companies }));
 }
 
 async function getCompany(req, res) {

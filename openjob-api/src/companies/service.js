@@ -5,10 +5,12 @@ import { NotFoundError } from '../middleware/error.js';
 import { redis } from '../redis.js';
 
 async function getAll() {
-	const { rows } = await pool.query(
-		'SELECT id, name, location, description, created_at, updated_at FROM companies ORDER BY created_at DESC',
-	);
-	return rows;
+	return await withCache('companies:list', async () => {
+		const { rows } = await pool.query(
+			'SELECT id, name, location, description, created_at, updated_at FROM companies ORDER BY created_at DESC',
+		);
+		return rows;
+	});
 }
 
 async function getById(id) {
@@ -32,6 +34,7 @@ async function insert({ description, location, name }, ownerId) {
 		// eslint-disable-next-line unicorn/no-null -- explicitly use null for database NULL compatibility
 		[ownerId, name, location ?? null, description ?? null],
 	);
+	await redis.del('companies:list');
 	return rows[0].id;
 }
 
@@ -49,14 +52,14 @@ async function update(id, { description, location, name }, userId) {
 			id,
 		],
 	);
-	await redis.del(`companies:${id}`);
+	await Promise.all([redis.del(`companies:${id}`), redis.del('companies:list')]);
 }
 
 async function remove(id, userId) {
 	const { data: company } = await getById(id);
 	assertOwner(company.owner_id, userId);
 	await pool.query('DELETE FROM companies WHERE id = $1', [id]);
-	await redis.del(`companies:${id}`);
+	await Promise.all([redis.del(`companies:${id}`), redis.del('companies:list')]);
 }
 
 export { getAll, getById, insert, remove, update };

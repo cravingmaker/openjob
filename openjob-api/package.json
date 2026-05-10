@@ -4,15 +4,15 @@
   "private": true,
   "description": "OpenJob RESTful API",
   "license": "UNLICENSED",
-  "author": "OpenJob",
+  "author": "Craving Maker <cravingmaker@github.com>",
   "type": "module",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "migrate:create": "node --env-file=.env node_modules/.bin/node-pg-migrate create",
-    "migrate:down": "node --env-file=.env node_modules/.bin/node-pg-migrate down",
-    "migrate:up": "node --env-file=.env node_modules/.bin/node-pg-migrate up",
+    "migrate:create": "npx node-pg-migrate create --envPath .env",
+    "migrate:down": "npx node-pg-migrate down --envPath .env",
+    "migrate:up": "npx node-pg-migrate up --envPath .env",
     "prepare": "husky",
     "start:dev": "node --env-file=.env --watch src/server.js"
   },
@@ -26,6 +26,7 @@
   "dependencies": {
     "amqplib": "1.2.0",
     "bcrypt": "6.0.0",
+    "dotenv": "17.4.2",
     "express": "5.2.1",
     "express-rate-limit": "8.5.1",
     "helmet": "8.1.0",
@@ -44,8 +45,7 @@
     "globals": "17.6.0",
     "husky": "9.1.7",
     "lint-staged": "17.0.4",
-    "prettier": "3.8.3",
-    "typescript": "6.0.3"
+    "prettier": "3.8.3"
   },
   "engines": {
     "node": ">=24.0.0"
