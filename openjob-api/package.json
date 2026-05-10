@@ -1,0 +1,59 @@
+{
+  "name": "openjob-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OpenJob RESTful API",
+  "license": "UNLICENSED",
+  "author": "OpenJob",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "migrate:create": "node --env-file=.env node_modules/.bin/node-pg-migrate create",
+    "migrate:down": "node --env-file=.env node_modules/.bin/node-pg-migrate down",
+    "migrate:up": "node --env-file=.env node_modules/.bin/node-pg-migrate up",
+    "prepare": "husky",
+    "start:dev": "node --env-file=.env --watch src/server.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "prettier": "@cravingmaker/prettier-config",
+  "dependencies": {
+    "amqplib": "1.2.0",
+    "bcrypt": "6.0.0",
+    "express": "5.2.1",
+    "express-rate-limit": "8.5.1",
+    "helmet": "8.1.0",
+    "jsonwebtoken": "9.0.3",
+    "multer": "2.1.1",
+    "node-pg-migrate": "8.0.4",
+    "pg": "8.20.0",
+    "redis": "5.12.1",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@cravingmaker/eslint-config": "0.0.8",
+    "@cravingmaker/prettier-config": "0.1.11",
+    "eslint": "10.3.0",
+    "eslint-plugin-express-security": "1.2.3",
+    "globals": "17.6.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.0.4",
+    "prettier": "3.8.3",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0"
+    }
+  }
+}

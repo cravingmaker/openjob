@@ -1,0 +1,47 @@
+{
+  "name": "openjob-consumer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OpenJob Queue Consumer",
+  "license": "UNLICENSED",
+  "author": "OpenJob",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky",
+    "start": "node --env-file=.env src/consumer.js",
+    "start:dev": "node --env-file=.env --watch src/consumer.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "prettier": "@cravingmaker/prettier-config",
+  "dependencies": {
+    "amqplib": "1.2.0",
+    "nodemailer": "8.0.7",
+    "pg": "8.20.0"
+  },
+  "devDependencies": {
+    "@cravingmaker/eslint-config": "0.0.8",
+    "@cravingmaker/prettier-config": "0.1.11",
+    "eslint": "10.3.0",
+    "globals": "17.6.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.0.4",
+    "prettier": "3.8.3"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24.0.0"
+    }
+  }
+}
